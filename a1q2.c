@@ -12,14 +12,21 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-    FILE *file = fopen(argv[1], "r");
+    FILE *file = fopen(argv[1], "rb");
     if (file == NULL) {
         fprintf(stderr, "The specified file does not exist.\n");
         return -1;
     }
+
+    fseek(file, 0, SEEK_END);
+    long fileSize = ftell(file);
     fclose(file);
 
-    char cmd[BUFSIZE] = "wc -c < ";
-    strncat(cmd, argv[1], BUFSIZE - strlen(cmd) - 1);
-    system(cmd);
+    if (fileSize == -1) {
+        fprintf(stderr, "Error determining the file size.\n");
+        return -1;
+    }
+
+    printf("%ld", fileSize);
+    return 0;
 }
