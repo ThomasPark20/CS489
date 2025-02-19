@@ -1,3 +1,6 @@
+#include <stdlib.h>
+#include <stdio.h>
+
 #define BUFFSIZE 256
     
 int read_file(const char *filename) {
